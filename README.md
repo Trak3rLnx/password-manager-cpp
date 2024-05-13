@@ -25,6 +25,11 @@ It's going to ask you :
 ### Features
 Instant copy in your clipboard -> the password is never shown
 
+### Depedencies
+OpenSSL
+Crypto lib C++
+XClip
+
 ### Installation
 
 ```bash
