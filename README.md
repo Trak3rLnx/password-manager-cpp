@@ -26,9 +26,9 @@ It's going to ask you :
 Instant copy in your clipboard -> the password is never shown
 
 ### Depedencies
-OpenSSL
-Crypto lib C++
-XClip
+OpenSSL        -> sudo apt-get install libssl-dev
+Crypto lib C++ -> sudo apt-get install libcrypto++-dev
+XClip          -> sudo apt-get install xclip
 
 ### Installation
 
