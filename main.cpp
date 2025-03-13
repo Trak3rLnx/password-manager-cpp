@@ -10,11 +10,12 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-  if ((argc != 2) && (argc != 3)) {
+  if ((argc != 2) && (argc != 3) && (argc != 4)) {
     cout << "Usage : " << endl;
     cout << "./passman 'website' <index to copy> [default is index 0]" << endl;
     cout << "./passman init" << endl;
     cout << "./passman add" << endl;
+    cout << "./passman delete 'website' <index to delete> [default is index 0]" << endl;
 
     exit(EXIT_FAILURE);
   }
@@ -25,13 +26,19 @@ int main(int argc, char *argv[]) {
   } else if (strcmp(argv[1], "add") == 0) {
     cout << "Add entry to the file" << endl;
     addEntry();
-
+  } else if (strcmp(argv[1], "delete") == 0) {
+    cout << "Delete entry to the file" << endl;
+    if (argc == 3) {
+      deleteEntry(argv[2], 0);
+    } else {
+      deleteEntry(argv[2], stoi(argv[3]));
+    }
   } else {
     cout << "Read file" << endl;
-    const string toSearch = argv[1];
+    const string toSearch = toLowerCase(argv[1]);
 
     vector<string> urls;
-    readFile(urls);
+    string _ = readFile(urls);
 
     optional<vector<string>> resultsVec = searchInVec(urls, toSearch);
 
