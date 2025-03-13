@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 
 using namespace std;
 
@@ -117,4 +119,10 @@ inline bool checkValidPassphrase(string &passphrase) {
     }
   }
   return false;
+}
+
+inline string toLowerCase(const string &input) {
+  string result = input;
+  transform(result.begin(), result.end(), result.begin(), ::tolower);
+  return result;
 }

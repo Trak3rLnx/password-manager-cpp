@@ -12,7 +12,7 @@
 
 using namespace std;
 
-inline void readFile(vector<string> &urls) {
+inline string readFile(vector<string> &urls) {
   ifstream file_pass("database.passman");
   string passphrase = getPassphrase();
   if (!file_pass) {
@@ -34,6 +34,7 @@ inline void readFile(vector<string> &urls) {
     }
     idx++;
   }
+  return passphrase;
 }
 
 inline void createFile() {
@@ -83,7 +84,45 @@ inline void addEntry() {
   cout << "Password : ";
   password = getPassphrase(false);
 
-  string toWrite = website + "|" + email + "|" + password;
+  string toWrite = toLowerCase(website) + "|" + email + "|" + password;
 
   file << "\n" << aesEncrypt(toWrite, passphrase);
 }
+
+inline void deleteEntry(const string &entryToDelete, int indexToDelete) {
+  vector<string> urls;
+  string passphrase = readFile(urls);
+  
+  optional<vector<string>> resultsVec = searchInVec(urls, toLowerCase(entryToDelete));
+  if (!resultsVec.has_value()) {
+      cerr << "No entry found for deletion!" << endl;
+      exit(EXIT_FAILURE);
+  }
+  
+  vector<string> entries = resultsVec.value();
+  if (indexToDelete < 0 || indexToDelete >= entries.size()) {
+      cerr << "Invalid index!" << endl;
+      exit(EXIT_FAILURE);
+  }
+  
+  string entryToRemove = entries[indexToDelete];
+  
+  ofstream file("database.passman", ios::out);
+  
+  if (!file) {
+      cerr << "Error opening file!" << endl;
+      exit(EXIT_FAILURE);
+  }
+  
+  file << aesEncrypt("passwordmanagerfile", passphrase);
+  
+  for (const auto &entry : urls) {
+      if (entry != entryToRemove) {
+          file << "\n" << aesEncrypt(entry, passphrase);
+      }
+  }
+  
+  file.close();
+  cout << "Entry deleted successfully!" << endl;
+}
+
