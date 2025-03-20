@@ -5,7 +5,7 @@
 
 To search a password
 ```bash
-./passman <website you looking for> <id to copy>
+./passman <website you looking for> <id to copy>(optional)
 ```
 
 To create your password file encrypted with your passphrase
@@ -21,6 +21,11 @@ It's going to ask you :
 - Website
 - Username / Email
 - Password
+
+To delete an entry in your password file
+```bash
+./passman delete <website> <id to delete>
+```
 
 ### Features
 Instant copy in your clipboard -> the password is never shown
